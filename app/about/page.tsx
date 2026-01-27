@@ -6,7 +6,7 @@ import CTA from "@/components/CTA";
 
 export default function About() {
   return (
-    <main className="pt-20 lg:pt-0">
+    <main>
       <AboutHero />
       <ValueProposition />
       <AboutContent />
