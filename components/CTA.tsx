@@ -43,6 +43,9 @@ export default function CTA() {
             <p className="text-gray-400 text-base max-w-md leading-relaxed">
               Connect with our experts today for integrated engineering solutions tailored to your business needs.
             </p>
+            <p className="text-[#d4af37] text-sm font-semibold">
+              We will respond in 1-2 business days.
+            </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
