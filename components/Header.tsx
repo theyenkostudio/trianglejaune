@@ -1,7 +1,9 @@
 "use client";
+import React from "react";
 import { Slant as Hamburger } from "hamburger-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -79,16 +81,16 @@ function ListItem({
   href,
   icon: Icon,
   ...props
-}: React.ComponentPropsWithoutRef<"li"> & { 
+}: React.ComponentPropsWithoutRef<"li"> & {
   href: string;
   icon?: React.ComponentType<{ className?: string }>;
 }) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link 
+        <Link
           href={href}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white"
+          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         >
           <div className="flex items-center gap-2">
             {Icon && <Icon className="h-4 w-4" />}
@@ -104,9 +106,31 @@ function ListItem({
 }
 
 export default function Header() {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="mt-6 mx-4 lg:mx-8 lg:mt-8 xl:mx-10 xl:mt-10 2xl:max-w-7xl fixed 2xl:mx-auto top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-lg">
-      <div>
+    <motion.header
+      initial={false}
+      animate={{
+        marginTop: isScrolled ? 0 : 24,
+        width: isScrolled ? "100%" : "calc(100% - 2rem)",
+        maxWidth: isScrolled ? "100%" : "80rem",
+        borderRadius: isScrolled ? 0 : 12,
+        backgroundColor: isScrolled ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.3)",
+        borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.1)" : "none",
+        padding: isScrolled ? "1rem 2rem" : "0.5rem 1rem",
+      }}
+      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-md"
+    >
+      <div className="w-full">
         <nav className="flex flex-row items-center justify-between">
           <Link href="/">
             <Image
@@ -126,7 +150,7 @@ export default function Header() {
           <NavigationMenu className="hidden lg:block">
             <NavigationMenuList >
               <NavigationMenuItem >
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-white/10`}>
                   <Link href="/" className="text-white ">
                     Home
                   </Link>
@@ -154,7 +178,7 @@ export default function Header() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-white/10`}>
                   <Link href="/agencies-products" className="text-white hover:text-white/80">
                     Agencies & Products
                   </Link>
@@ -182,7 +206,7 @@ export default function Header() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-white/10`}>
                   <Link href="/contact" className="text-white hover:text-white/80">
                     Contact Us
                   </Link>
@@ -192,6 +216,6 @@ export default function Header() {
           </NavigationMenu>
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 }

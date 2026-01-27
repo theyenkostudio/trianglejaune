@@ -12,7 +12,7 @@ const bricolage = Bricolage_Grotesque({
 export default function Hero() {
   return (
     <section className="relative w-full h-[70vh] xl:h-[85vh] min-h-150 overflow-hidden">
-      <div className="absolute inset-0 z-0 m-2 lg:m-4 xl:m-6">
+      <div className="absolute inset-x-0 bottom-0 top-0 z-0 m-2 mt-0 lg:m-4 lg:mt-0 xl:m-6 xl:mt-0">
         <Image
           src="/hero.jpg"
           alt="Freight transport railway"
@@ -32,9 +32,9 @@ export default function Hero() {
             >
               A global mission to give you an edge in <span className="text-blue-500">water works</span>.
             </h1>
-          <Button className="bg-[#d4af37] mt-5 text-white px-8 py-6 rounded-lg font-semibold text-base hover:bg-[#1e3a5f] transition-colors duration-300">
-            Learn More
-          </Button>
+            <Button className="bg-[#d4af37] mt-5 text-white px-8 py-6 rounded-lg font-semibold text-base hover:bg-[#1e3a5f] transition-colors duration-300">
+              Learn More
+            </Button>
           </div>
           <div className="hidden md:flex mt-10 flex-row justify-end">
             <div className="p-5 rounded-xl bg-black/10 backdrop-blur-md ">
