@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { Bricolage_Grotesque, Manrope } from 'next/font/google';
-import { ArrowRight, Mail, Phone } from 'lucide-react';
+import { ArrowRight, Mail, Phone, Globe2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 const bricolage = Bricolage_Grotesque({
@@ -18,76 +17,66 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export default function CTA() {
+  const offices = [
+    { country: "Nigeria", num: "+234 810 068 3583" },
+    { country: "Lebanon", num: "+961 1 878733" },
+    { country: "Syria", num: "+963 959 099 938" }
+  ];
+
   return (
-    <section className={`${manrope.className} py-20 px-4 md:px-8`}>
-      <div className="max-w-7xl mx-auto relative overflow-hidden rounded-[2rem] bg-[#152a45] p-8 md:p-16 lg:p-24 shadow-2xl">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-[#d4af37] opacity-10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-[#d4af37] opacity-5 rounded-full blur-2xl"></div>
+    <section className={`${manrope.className} py-12 px-4 md:px-8 bg-gray-50/50`}>
+      <div className="max-w-6xl mx-auto overflow-hidden rounded-3xl bg-[#152a45] shadow-xl relative">
+        {/* Subtle accent line at the top */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-[#d4af37]" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className={`${bricolage.className} text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight`}>
-              Ready to start your <br />
-              <span className="text-[#d4af37]">next project?</span>
+        <div className="p-8 md:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+
+          {/* Left Side: Copy */}
+          <div className="flex-1 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4af37]/10 text-[#d4af37] text-xs font-bold uppercase tracking-widest">
+              <Globe2 className="w-3 h-3" />
+              Get Started
+            </div>
+            <h2 className={`${bricolage.className} text-3xl md:text-4xl font-bold text-white leading-tight`}>
+              Ready for your <span className="text-[#d4af37]">next project?</span>
             </h2>
-            <p className="text-gray-300 text-lg mb-4 max-w-md leading-relaxed">
-              Connect with our experts today for integrated engineering solutions tailored to your business needs and existing infrastructure.
-            </p>
-            <p className="text-[#d4af37] text-sm font-semibold mb-10">
-              Please feel free to contact us. We will get back to you with 1-2 business days.
+            <p className="text-gray-400 text-base max-w-md leading-relaxed">
+              Connect with our experts today for integrated engineering solutions tailored to your business needs.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/contact"
-                className="bg-[#d4af37] hover:bg-[#b3952f] text-[#152a45] font-bold px-8 py-4 rounded-xl flex items-center gap-2 transition-all duration-300 transform hover:scale-105"
+                className="bg-[#d4af37] hover:bg-white text-[#152a45] font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300"
               >
                 Contact Us
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <a
                 href="mailto:info@trianglejaune.com"
-                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl flex items-center gap-2 backdrop-blur-sm transition-all duration-300"
+                className="text-white hover:text-[#d4af37] font-semibold px-2 py-3 flex items-center gap-2 transition-colors"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-4 h-4" />
                 Email Us
               </a>
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10">
-            <h3 className="text-white font-bold text-2xl mb-6">Global Support</h3>
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-xl bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
-                  <Phone className="w-6 h-6" />
+          {/* Right Side: Contact Grid */}
+          <div className="lg:w-1/3 border-t lg:border-t-0 lg:border-l border-white/10 pt-8 lg:pt-0 lg:pl-10">
+            <p className="text-[#d4af37] text-xs font-bold uppercase tracking-widest mb-6">Offices</p>
+            <div className="grid gap-5">
+              {offices.map((office) => (
+                <div key={office.country} className="flex flex-col group">
+                  <span className="text-gray-500 text-[10px] font-bold uppercase">{office.country}</span>
+                  <a href={`tel:${office.num.replace(/\s/g, '')}`} className="text-white group-hover:text-[#d4af37] transition-colors text-sm font-medium">
+                    {office.num}
+                  </a>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm uppercase tracking-wider font-bold">Nigeria</p>
-                  <p className="text-white font-medium">+234 810 068 3583</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-xl bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm uppercase tracking-wider font-bold">Lebanon</p>
-                  <p className="text-white font-medium">+961 1 878733</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-xl bg-[#d4af37]/20 flex items-center justify-center text-[#d4af37] group-hover:bg-[#d4af37] group-hover:text-white transition-colors">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-gray-400 text-sm uppercase tracking-wider font-bold">Syria</p>
-                  <p className="text-white font-medium">+963 959 099 938</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>

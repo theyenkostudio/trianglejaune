@@ -132,7 +132,7 @@ export default function ServicesSection() {
               </div>
 
               {/* Mobile gradient for readability */}
-              <div className="absolute inset-0 md:hidden bg-gradient-to-t from-black/60 via-black/20 to-transparent z-0" />
+              <div className="absolute inset-0 md:hidden bg-linear-to-t from-black/60 via-black/20 to-transparent z-0" />
 
               {/* Content */}
               <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-between z-10">

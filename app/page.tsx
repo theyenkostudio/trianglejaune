@@ -10,13 +10,11 @@ import ContactSection from '@/components/ContactSection'
 export default function Home() {
   return (
     <div>
-      <Header />
       <Hero />
       <ServicesSection />
       <EquipmentPartners />
       <GlobalPresence />
       <ContactSection />
-      <Footer />
     </div>
   )
 }

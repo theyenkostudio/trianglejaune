@@ -164,8 +164,8 @@ export default function Header() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-white/10`}>
-                    <Link href="/" className="text-white">
-                      Home
+                    <Link href="/about" className="text-white">
+                      About
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
