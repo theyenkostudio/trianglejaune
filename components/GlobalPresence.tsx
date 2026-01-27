@@ -18,7 +18,7 @@ export default function GlobalPresence() {
     <div className={`${manrope.className} my-10 mx-4 md:my-12 lg:my-16 xl:my-20 2xl:max-w-7xl 2xl:mx-auto`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
         {/* Text Content - appears second on mobile, first on desktop */}
-        <div className="order-2 lg:order-1 text-center lg:text-left">
+        <div className="text-center lg:text-left">
           <h2 className={`${bricolage.className} font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#152a45] mb-6 lg:mb-8`}>
             <span className="text-[#d4af37]">Global presence</span>{' '}
             <span className="block mt-2">across two continents in 3 nations</span>

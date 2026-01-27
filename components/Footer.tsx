@@ -44,7 +44,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className={`bg-[#152a45] text-white m-2 lg:m-4 xl:m-6 rounded-xl ${manrope.className}`}>
+    <footer className={`bg-[#152a45] text-white w-full ${manrope.className}`}>
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
         {/* Logo Section */}
