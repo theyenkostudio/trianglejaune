@@ -94,7 +94,7 @@ export default function ServicePage() {
           >
             <Link href="/" className="inline-flex items-center gap-2 text-[#d4af37] font-bold mb-8 hover:gap-4 transition-all">
               <ArrowLeft className="w-5 h-5" />
-              Back to Services
+              Back to Home
             </Link>
             <h1 className={`${bricolage.className} text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 uppercase tracking-tight`}>
               {data.title}
