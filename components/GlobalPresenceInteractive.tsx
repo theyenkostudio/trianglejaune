@@ -66,6 +66,31 @@ const countries: CountryData[] = [
 
 const countryISOs = countries.map((c) => c.iso);
 
+// Colorful palette for non-highlighted countries
+const mapColors = [
+  "#a8d5ba", // soft green
+  "#f7d794", // warm yellow
+  "#dda0dd", // plum
+  "#87ceeb", // sky blue
+  "#f4a460", // sandy brown
+  "#98d8c8", // mint
+  "#c9b1ff", // lavender
+  "#ffb6c1", // light pink
+  "#90ee90", // light green
+  "#ffd700", // gold
+  "#e6e6fa", // lavender mist
+  "#b0e0e6", // powder blue
+];
+
+// Simple hash function for consistent country colors
+const getCountryColor = (id: string): string => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return mapColors[Math.abs(hash) % mapColors.length];
+};
+
 export default function GlobalPresenceInteractive() {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
@@ -147,7 +172,7 @@ export default function GlobalPresenceInteractive() {
 
         {/* Interactive Map */}
         <div className="order-1 lg:order-2">
-          <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl overflow-hidden shadow-lg">
+          <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-sky-50 to-blue-100 rounded-2xl overflow-hidden shadow-lg">
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
@@ -192,8 +217,8 @@ export default function GlobalPresenceInteractive() {
                                 ? isSelected
                                   ? countryData?.color
                                   : `${countryData?.color}99`
-                                : "#e2e8f0",
-                              stroke: isHighlighted ? countryData?.color : "#cbd5e1",
+                                : getCountryColor(geo.rsmKey),
+                              stroke: isHighlighted ? countryData?.color : "#ffffff",
                               strokeWidth: isHighlighted ? 1.5 : 0.5,
                               outline: "none",
                               transition: "all 0.3s ease",
@@ -202,16 +227,16 @@ export default function GlobalPresenceInteractive() {
                             hover: {
                               fill: isHighlighted
                                 ? countryData?.color
-                                : "#e2e8f0",
-                              stroke: isHighlighted ? countryData?.color : "#cbd5e1",
-                              strokeWidth: isHighlighted ? 2 : 0.5,
+                                : getCountryColor(geo.rsmKey),
+                              stroke: isHighlighted ? countryData?.color : "#ffffff",
+                              strokeWidth: isHighlighted ? 2 : 0.75,
                               outline: "none",
                               cursor: isHighlighted ? "pointer" : "default",
                             },
                             pressed: {
                               fill: isHighlighted
                                 ? countryData?.color
-                                : "#e2e8f0",
+                                : getCountryColor(geo.rsmKey),
                               outline: "none",
                             },
                           }}
@@ -230,14 +255,14 @@ export default function GlobalPresenceInteractive() {
                     onMouseLeave={handleMarkerLeave}
                     onClick={() => handleMarkerClick(country)}
                   >
-                    {/* Pulse animation */}
+                    {/* Outer glow / pulse animation */}
                     <motion.circle
-                      r={12}
+                      r={16}
                       fill={country.color}
-                      fillOpacity={0.3}
+                      fillOpacity={0.4}
                       animate={{
-                        r: [12, 20, 12],
-                        fillOpacity: [0.3, 0, 0.3],
+                        r: [16, 28, 16],
+                        fillOpacity: [0.4, 0, 0.4],
                       }}
                       transition={{
                         duration: 2,
@@ -245,13 +270,22 @@ export default function GlobalPresenceInteractive() {
                         ease: "easeInOut",
                       }}
                     />
-                    {/* Main marker */}
+                    {/* Dark shadow ring for contrast */}
+                    <circle
+                      r={14}
+                      fill="none"
+                      stroke="#152a45"
+                      strokeWidth={3}
+                      strokeOpacity={0.3}
+                      style={{ pointerEvents: "none" }}
+                    />
+                    {/* Main marker - larger */}
                     <motion.circle
-                      r={8}
+                      r={11}
                       fill={country.color}
                       stroke="#fff"
-                      strokeWidth={2}
-                      style={{ cursor: "pointer" }}
+                      strokeWidth={3}
+                      style={{ cursor: "pointer", filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}
                       whileHover={{ scale: 1.3 }}
                       animate={
                         selectedCountry?.name === country.name
@@ -266,8 +300,8 @@ export default function GlobalPresenceInteractive() {
                         }),
                       }}
                     />
-                    {/* Inner dot */}
-                    <circle r={3} fill="#fff" style={{ pointerEvents: "none" }} />
+                    {/* Inner dot - larger */}
+                    <circle r={4} fill="#fff" style={{ pointerEvents: "none" }} />
                   </Marker>
                 ))}
               </ZoomableGroup>
@@ -336,32 +370,18 @@ export default function GlobalPresenceInteractive() {
                     </svg>
                   </button>
 
-                  {/* Mobile: Stacked layout */}
-                  <div className="sm:hidden">
-                    <div className="flex items-center gap-2 mb-2 pr-6">
+                  {/* Mobile: Clean compact layout */}
+                  <div className="sm:hidden flex items-center justify-between pr-8">
+                    <div className="flex items-center gap-2">
                       <div
                         className="w-3 h-3 rounded-full shrink-0"
                         style={{ backgroundColor: selectedCountry.color }}
                       />
                       <h3 className="font-bold text-base">{selectedCountry.name}</h3>
                     </div>
-                    <p className="text-gray-300 text-xs mb-3 pr-6 line-clamp-2">
-                      {selectedCountry.description}
+                    <p className="text-[#d4af37] font-bold text-base">
+                      {selectedCountry.projects}
                     </p>
-                    <div className="flex gap-4">
-                      <div>
-                        <p className="text-[#d4af37] font-bold text-base">
-                          {selectedCountry.projects}
-                        </p>
-                        <p className="text-gray-400 text-xs">Completed</p>
-                      </div>
-                      <div>
-                        <p className="text-[#d4af37] font-bold text-base">
-                          {selectedCountry.since}
-                        </p>
-                        <p className="text-gray-400 text-xs">Operations</p>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Desktop: Horizontal layout */}

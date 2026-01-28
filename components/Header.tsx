@@ -124,25 +124,34 @@ function ListItem({
 }
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setIsScrolled(window.scrollY > 20);
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
+  // Hide header when scrolled past hero (same threshold as StickyHeader)
+  useEffect(() => {
+    const handleScroll = () => {
+      const shouldHide = window.scrollY > 500;
+      setIsHidden(shouldHide);
+      // Close mobile menu when header hides
+      if (shouldHide && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMenuOpen]);
 
-  // // Prevent scroll when menu is open
-  // useEffect(() => {
-  //   if (isMenuOpen) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "unset";
-  //   }
-  // }, [isMenuOpen]);
+  // Prevent scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -151,15 +160,17 @@ export default function Header() {
       <motion.header
         initial={false}
         animate={{
-          marginTop: isScrolled ? 0 : 24,
-          width: isScrolled ? "100%" : "calc(100% - 2rem)",
-          maxWidth: isScrolled ? "100%" : "80rem",
-          borderRadius: isScrolled ? 0 : 12,
-          backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.9)" : "rgba(0, 0, 0, 0.3)",
-          borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
-          padding: isScrolled ? "1rem 2rem" : "0.5rem 1rem",
+          y: isHidden ? -100 : 0,
+          opacity: isHidden ? 0 : 1,
+          marginTop: 24,
+          width: "calc(100% - 2rem)",
+          maxWidth: "80rem",
+          borderRadius: 12,
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+          padding: "0.5rem 1rem",
         }}
-        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-md "
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-md"
       >
         <div className="w-full xl:py-2 xl:px-4">
           <nav className="flex flex-row items-center justify-between">
@@ -250,9 +261,8 @@ export default function Header() {
       </motion.header>
 
       {/* Mobile Menu Overlay */}
-{/* Mobile Menu Overlay */}
 <AnimatePresence>
-  {isMenuOpen && (
+  {isMenuOpen && !isHidden && (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -268,6 +278,16 @@ export default function Header() {
           onClick={() => setIsMenuOpen(false)}
         >
           Home
+          <ChevronRight className="text-[#d4af37]" />
+        </Link>
+
+        {/* About Link */}
+        <Link
+          href="/about"
+          className={`${bricolage.className} text-white text-2xl font-bold border-b border-white/10 pb-6 flex items-center justify-between hover:text-[#d4af37] transition-colors`}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          About
           <ChevronRight className="text-[#d4af37]" />
         </Link>
 
@@ -310,6 +330,35 @@ export default function Header() {
           Agencies & Products
           <ChevronRight className="text-[#d4af37]" />
         </Link>
+
+        {/* Projects Accordion */}
+        <Accordion
+          className="flex w-full flex-col border-b border-white/10 pb-6"
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+        >
+          <AccordionItem value="projects">
+            <AccordionTrigger className={`${bricolage.className} w-full text-left text-white text-2xl font-bold`}>
+              <div className="flex items-center justify-between w-full">
+                <div>Projects</div>
+                <ChevronUp className="h-5 w-5 text-[#d4af37] transition-transform duration-200 group-data-expanded:-rotate-180" />
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-1 gap-2 mt-4">
+                {projects.map((project) => (
+                  <Link
+                    key={project.title}
+                    href={project.href}
+                    className={`${manrope.className} text-white/80 text-base font-medium p-3 rounded-lg bg-white/5 flex items-center gap-3 hover:bg-white/10 hover:text-white transition-all`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {project.title}
+                  </Link>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         {/* Contact Us */}
         <Link

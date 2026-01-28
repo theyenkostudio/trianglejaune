@@ -27,7 +27,7 @@ export default function NotFound() {
         <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#d4af37]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl" />
 
-        {/* Animated water drops */}
+        {/* Animated water drops - fewer on mobile */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -42,18 +42,18 @@ export default function NotFound() {
               delay: i * 0.8,
               ease: "easeInOut",
             }}
-            className="absolute"
+            className={`absolute ${i > 2 ? 'hidden sm:block' : ''}`}
             style={{
               left: `${15 + i * 15}%`,
               top: `${10 + (i % 3) * 20}%`,
             }}
           >
-            <Droplets className="w-6 h-6 text-[#d4af37]/20" />
+            <Droplets className="w-5 h-5 sm:w-6 sm:h-6 text-[#d4af37]/20" />
           </motion.div>
         ))}
       </div>
 
-      <div className="relative z-10 text-center px-6">
+      <div className="relative z-10 text-center px-4 sm:px-6 w-full max-w-lg mx-auto">
         {/* 404 Number */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -61,7 +61,7 @@ export default function NotFound() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h1
-            className={`${bricolage.className} text-[150px] md:text-[200px] lg:text-[250px] font-bold leading-none text-transparent bg-clip-text bg-gradient-to-b from-[#d4af37] to-[#d4af37]/30`}
+            className={`${bricolage.className} text-[100px] xs:text-[120px] sm:text-[150px] md:text-[200px] lg:text-[250px] font-bold leading-none text-transparent bg-clip-text bg-gradient-to-b from-[#d4af37] to-[#d4af37]/30`}
           >
             404
           </h1>
@@ -74,11 +74,11 @@ export default function NotFound() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h2
-            className={`${bricolage.className} text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 -mt-8 md:-mt-12`}
+            className={`${bricolage.className} text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 -mt-4 sm:-mt-8 md:-mt-12`}
           >
             Page Not Found
           </h2>
-          <p className="text-gray-400 text-base md:text-lg max-w-md mx-auto mb-8">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-md mx-auto mb-6 sm:mb-8">
             Looks like this page has dried up. Let&apos;s get you back to
             familiar waters.
           </p>
@@ -89,20 +89,20 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 px-6 py-3 bg-[#d4af37] text-[#152a45] font-semibold rounded-lg hover:bg-[#e5c04b] transition-all duration-300"
+            className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-[#d4af37] text-[#152a45] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#e5c04b] transition-all duration-300"
           >
-            <Home className="w-5 h-5" />
+            <Home className="w-4 h-4 sm:w-5 sm:h-5" />
             Back to Home
           </Link>
           <button
             onClick={() => window.history.back()}
-            className="group inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300"
+            className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 border border-white/20 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-white/10 transition-all duration-300"
           >
-            <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
             Go Back
           </button>
         </motion.div>
@@ -112,7 +112,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-gray-500 text-sm mt-12"
+          className="text-gray-500 text-xs sm:text-sm mt-8 sm:mt-12"
         >
           Need help?{" "}
           <Link
