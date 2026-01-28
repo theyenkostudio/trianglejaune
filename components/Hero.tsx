@@ -24,9 +24,9 @@ const slides = [
     id: 2,
     image: "/images/hero2.jpg",
     title: "A regional legacy and destiny on ",
-    highlight: "water solutions",
+    highlight: "water solutions ",
     highlightColor: "text-[#d4af37]",
-    subtitle: "in Middle East & Africa",
+    subtitle: "in the Middle East & Africa",
   },
 ];
 
@@ -81,7 +81,7 @@ export default function Hero() {
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
               <h1
-                className={`${bricolage.className} text-white text-left text-4xl font-bold lg:max-w-xl xl:max-w-200 md:text-5xl lg:text-6xl`}
+                className={`${bricolage.className} text-white text-left text-4xl font-bold lg:max-w-4xl xl:max-w-5xl md:text-5xl lg:text-6xl`}
               >
                 {slides[currentSlide].title}
                 <span className={slides[currentSlide].highlightColor}>
@@ -89,7 +89,6 @@ export default function Hero() {
                 </span>
                 {slides[currentSlide].subtitle && (
                   <>
-                    <br />
                     <span className="text-white">{slides[currentSlide].subtitle}</span>
                   </>
                 )}
