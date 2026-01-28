@@ -21,10 +21,11 @@ export default function GlobalPresence() {
         <div className="text-center lg:text-left">
           <h2 className={`${bricolage.className} font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#152a45] mb-6 lg:mb-8`}>
             <span className="text-[#d4af37]">Global presence</span>{' '}
+
             <span className="block mt-2">across two continents in 3 nations</span>
           </h2>
 
-          <p className="text-base md:text-lg text-gray-600 mb-8 lg:mb-10 max-w-xl mx-auto lg:mx-0">
+          <p className="text-base md:text-lg text-black mb-8 lg:mb-10 max-w-xl mx-auto lg:mx-0">
             Triangle Jaune has established a strong regional presence across the Middle East
             and Africa, delivering world-class water solutions since 1998.
           </p>

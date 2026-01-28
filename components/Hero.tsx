@@ -18,7 +18,7 @@ const slides = [
     image: "/hero.jpg",
     title: "A global mission to give you an edge in ",
     highlight: "water works",
-    highlightColor: "text-blue-500",
+    highlightColor: "text-[#d4af37]",
   },
   {
     id: 2,
