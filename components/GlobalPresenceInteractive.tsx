@@ -273,14 +273,14 @@ export default function GlobalPresenceInteractive() {
               </ZoomableGroup>
             </ComposableMap>
 
-            {/* Tooltip */}
+            {/* Hover Tooltip - hidden on touch devices */}
             <AnimatePresence>
-              {hoveredCountry && (
+              {hoveredCountry && !selectedCountry && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-lg shadow-lg border border-gray-100"
+                  className="hidden sm:block absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-lg shadow-lg border border-gray-100"
                 >
                   <div className="flex items-center gap-2">
                     <div
@@ -302,9 +302,17 @@ export default function GlobalPresenceInteractive() {
               )}
             </AnimatePresence>
 
-            {/* Zoom hint - moves up when info card is shown */}
-            <div className={`absolute right-4 text-xs text-gray-400 bg-white/80 px-2 py-1 rounded transition-all duration-300 ${selectedCountry ? 'bottom-28' : 'bottom-4'}`}>
-              Scroll to zoom • Drag to pan
+            {/* Mobile tap hint - only show on mobile when nothing selected */}
+            {!selectedCountry && (
+              <div className="sm:hidden absolute bottom-4 left-4 right-4 text-center text-xs text-gray-500 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg">
+                Tap a marker to view country details
+              </div>
+            )}
+
+            {/* Zoom hint - moves up when info card is shown, different text for mobile */}
+            <div className={`absolute right-4 text-xs text-gray-400 bg-white/80 px-2 py-1 rounded transition-all duration-300 ${selectedCountry ? 'bottom-32 sm:bottom-28' : 'bottom-14 sm:bottom-4'}`}>
+              <span className="hidden sm:inline">Scroll to zoom • Drag to pan</span>
+              <span className="sm:hidden">Pinch to zoom</span>
             </div>
 
             {/* Selected Country Info Card - Bottom of Map */}
@@ -315,9 +323,49 @@ export default function GlobalPresenceInteractive() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 100 }}
                   transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                  className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-r from-[#152a45] to-[#1e3a5f] text-white rounded-b-2xl"
+                  className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-r from-[#152a45] to-[#1e3a5f] text-white rounded-b-2xl"
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  {/* Close button - top right */}
+                  <button
+                    onClick={() => setSelectedCountry(null)}
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 text-gray-400 hover:text-white transition-colors cursor-pointer z-10"
+                    aria-label="Close"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+
+                  {/* Mobile: Stacked layout */}
+                  <div className="sm:hidden">
+                    <div className="flex items-center gap-2 mb-2 pr-6">
+                      <div
+                        className="w-3 h-3 rounded-full shrink-0"
+                        style={{ backgroundColor: selectedCountry.color }}
+                      />
+                      <h3 className="font-bold text-base">{selectedCountry.name}</h3>
+                    </div>
+                    <p className="text-gray-300 text-xs mb-3 pr-6 line-clamp-2">
+                      {selectedCountry.description}
+                    </p>
+                    <div className="flex gap-4">
+                      <div>
+                        <p className="text-[#d4af37] font-bold text-base">
+                          {selectedCountry.projects}
+                        </p>
+                        <p className="text-gray-400 text-xs">Completed</p>
+                      </div>
+                      <div>
+                        <p className="text-[#d4af37] font-bold text-base">
+                          {selectedCountry.since}
+                        </p>
+                        <p className="text-gray-400 text-xs">Operations</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop: Horizontal layout */}
+                  <div className="hidden sm:flex items-center justify-between gap-4 pr-8">
                     <div className="flex items-center gap-3 min-w-0">
                       <div
                         className="w-4 h-4 rounded-full shrink-0"
@@ -325,7 +373,7 @@ export default function GlobalPresenceInteractive() {
                       />
                       <div className="min-w-0">
                         <h3 className="font-bold text-lg">{selectedCountry.name}</h3>
-                        <p className="text-gray-300 text-sm hidden sm:block truncate">
+                        <p className="text-gray-300 text-sm truncate">
                           {selectedCountry.description}
                         </p>
                       </div>
@@ -344,15 +392,6 @@ export default function GlobalPresenceInteractive() {
                         <p className="text-gray-400 text-xs">Operations</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setSelectedCountry(null)}
-                      className="text-gray-400 hover:text-white transition-colors cursor-pointer shrink-0"
-                      aria-label="Close"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </button>
                   </div>
                 </motion.div>
               )}
