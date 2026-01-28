@@ -15,7 +15,7 @@ const bricolage = Bricolage_Grotesque({
 
 export default function GlobalPresence() {
   return (
-    <div className={`${manrope.className} my-10 mx-4 md:my-12 lg:my-16 xl:my-20 2xl:max-w-7xl 2xl:mx-auto`}>
+    <div className={`${manrope.className} my-10 mx-4 md:mx-8 md:my-12 lg:my-16 xl:my-20 2xl:max-w-7xl 2xl:mx-auto`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
         {/* Text Content - appears second on mobile, first on desktop */}
         <div className="text-center lg:text-left">

@@ -2,10 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Bricolage_Grotesque, Manrope } from "next/font/google";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
+  subsets: ["latin"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -25,11 +30,11 @@ export function AboutHero() {
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-4xl">
-        <h1 className={`${bricolage.className} text-5xl md:text-7xl font-bold text-white mb-6 uppercase tracking-tight`}>
+        <h1 className={`${bricolage.className} text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight`}>
           About <span className="text-[#d4af37]">Us</span>
         </h1>
         <div className="h-1.5 w-24 bg-[#d4af37] mx-auto mb-8" />
-        <p className="text-xl md:text-2xl text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed">
+        <p className={`${manrope.className} text-xl md:text-2xl text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed`}>
           Pioneering water solutions and engineering excellence across the Middle East and Africa since 1998.
         </p>
       </div>

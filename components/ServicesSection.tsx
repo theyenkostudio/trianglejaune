@@ -100,7 +100,7 @@ export default function ServicesSection() {
               transition={{ delay: index * 0.1 }}
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
-              className="group relative h-[360px] lg:h-[420px] rounded-3xl overflow-hidden bg-white cursor-pointer shadow-xs hover:shadow-xl transition-shadow duration-500"
+              className="group relative h-90 lg:h-105 rounded-3xl overflow-hidden bg-white cursor-pointer shadow-xs hover:shadow-xl transition-shadow duration-500"
             >
               {/* Background */}
               <div className="absolute inset-0">
@@ -132,7 +132,7 @@ export default function ServicesSection() {
               </div>
 
               {/* Mobile gradient for readability */}
-              <div className="absolute inset-0 md:hidden bg-linear-to-t from-black/60 via-black/20 to-transparent z-0" />
+              <div className="absolute inset-0 md:hidden opacity-60 bg-[#152a45] z-0" />
 
               {/* Content */}
               <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-between z-10">

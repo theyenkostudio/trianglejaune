@@ -19,7 +19,7 @@ export default function ContactSection() {
   return (
     <section className={`${manrope.className} py-12 px-4 md:px-8`}>
       {/* Main Container with Background */}
-      <div className="max-w-7xl mx-auto relative rounded-[3rem] overflow-hidden bg-[#152a45] min-h-[600px] flex items-center">
+      <div className="max-w-7xl mx-auto relative rounded-3xl overflow-hidden bg-[#152a45] min-h-[600px] flex items-center">
 
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[120px] -mr-48 -mt-48" />
@@ -35,7 +35,7 @@ export default function ContactSection() {
                 Global Presence
               </div>
               <h2 className={`${bricolage.className} text-4xl md:text-5xl font-bold text-white leading-tight`}>
-                Let's build the <br />
+                Let&apos;s build the <br />
                 <span className="text-[#d4af37]">future together.</span>
               </h2>
               <p className="mt-4 text-gray-300 text-lg max-w-sm">
@@ -67,7 +67,7 @@ export default function ContactSection() {
 
           {/* Right Side: Floating Form Card (7 columns) */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">

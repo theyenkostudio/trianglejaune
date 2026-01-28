@@ -13,7 +13,25 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Facebook, Linkedin, Instagram, ChevronUp } from 'lucide-react';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
 import { Wrench, Droplets, Zap, HardHat, Drill, Building2, Factory, Sun, Waves, ChevronRight, X } from "lucide-react";
+import { Bricolage_Grotesque, Manrope } from 'next/font/google';
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: '--font-bricolage',
+  subsets: ['latin'],
+});
 
 const services = [
   {
@@ -141,9 +159,9 @@ export default function Header() {
           borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
           padding: isScrolled ? "1rem 2rem" : "0.5rem 1rem",
         }}
-        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-md"
+        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 backdrop-blur-md "
       >
-        <div className="w-full">
+        <div className="w-full xl:py-2 xl:px-4">
           <nav className="flex flex-row items-center justify-between">
             <Link href="/" onClick={() => setIsMenuOpen(false)}>
               <Image
@@ -232,68 +250,116 @@ export default function Header() {
       </motion.header>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#0a0a0a] pt-28 px-6 lg:hidden overflow-y-auto"
-          >
-            <div className="flex flex-col gap-8 pb-12">
-              <Link
-                href="/"
-                className="text-white text-3xl font-bold border-b border-white/10 pb-4 flex items-center justify-between"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-                <ChevronRight className="text-[#d4af37]" />
-              </Link>
+{/* Mobile Menu Overlay */}
+<AnimatePresence>
+  {isMenuOpen && (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-40 bg-[#152a45] pt-28 px-6 lg:hidden overflow-y-auto"
+    >
+      <div className="flex flex-col gap-6 pb-12">
+        {/* Home Link */}
+        <Link
+          href="/"
+          className={`${bricolage.className} text-white text-2xl font-bold border-b border-white/10 pb-6 flex items-center justify-between hover:text-[#d4af37] transition-colors`}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Home
+          <ChevronRight className="text-[#d4af37]" />
+        </Link>
 
-              <div className="space-y-4">
-                <p className="text-gray-500 uppercase text-xs tracking-widest font-bold">Services</p>
-                <div className="grid grid-cols-1 gap-2">
-                  {services.map((service) => (
-                    <Link
-                      key={service.title}
-                      href={service.href}
-                      className="text-white text-xl font-medium p-3 rounded-xl bg-white/5 flex items-center gap-3 active:bg-white/10"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <service.icon className="w-5 h-5 text-[#d4af37]" />
-                      {service.title}
-                    </Link>
-                  ))}
-                </div>
+        {/* Services Accordion */}
+        <Accordion
+          className="flex w-full flex-col border-b border-white/10 pb-6"
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+        >
+          <AccordionItem value="services">
+            <AccordionTrigger className={`${bricolage.className} w-full text-left text-white text-2xl font-bold`}>
+              <div className="flex items-center justify-between w-full">
+                <div>Services</div>
+                <ChevronUp className="h-5 w-5 text-[#d4af37] transition-transform duration-200 group-data-expanded:-rotate-180" />
               </div>
-
-              <div className="space-y-4">
-                <p className="text-gray-500 uppercase text-xs tracking-widest font-bold">More</p>
-                <div className="flex flex-col gap-6">
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-1 gap-2 mt-4">
+                {services.map((service) => (
                   <Link
-                    href="/agencies-products"
-                    className="text-white text-2xl font-bold flex items-center justify-between"
+                    key={service.title}
+                    href={service.href}
+                    className={`${manrope.className} text-white/80 text-base font-medium p-3 rounded-lg bg-white/5 flex items-center gap-3 hover:bg-white/10 hover:text-white transition-all`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Agencies & Products
-                    <ChevronRight className="text-[#d4af37]" />
+                 
+                    {service.title}
                   </Link>
-                  <Link
-                    href="/contact"
-                    className="text-white text-2xl font-bold flex items-center justify-between"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Contact Us
-                    <ChevronRight className="text-[#d4af37]" />
-                  </Link>
-                </div>
+                ))}
               </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Agencies & Products */}
+        <Link
+          href="/agencies-products"
+          className={`${bricolage.className} text-white text-2xl font-bold border-b border-white/10 pb-6 flex items-center justify-between hover:text-[#d4af37] transition-colors`}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Agencies & Products
+          <ChevronRight className="text-[#d4af37]" />
+        </Link>
+
+        {/* Contact Us */}
+        <Link
+          href="/contact"
+          className={`${bricolage.className} text-white text-2xl font-bold border-b border-white/10 pb-6 flex items-center justify-between hover:text-[#d4af37] transition-colors`}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Contact Us
+          <ChevronRight className="text-[#d4af37]" />
+        </Link>
+
+        {/* Social Media Links */}
+        <div className="mt-auto pt-8">
+          <p className={`${manrope.className} text-gray-400 uppercase text-xs tracking-widest font-semibold mb-4`}>
+            Connect With Us
+          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#d4af37] text-white transition-all duration-300 group"
+              aria-label="Facebook"
+            >
+              <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#d4af37] text-white transition-all duration-300 group"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#d4af37] text-white transition-all duration-300 group"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </>
   );
 }
